@@ -2,7 +2,7 @@
 layout: page
 title: Nuclear Astrophysics studies with HF-ADNeF
 description: Understanding the origin of elements in our Universe
-img: assets/img/12.jpg
+img: assets/img/gft_birmingham_uni.jpg
 importance: 1
 category: work
 related_publications: true
