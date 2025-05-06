@@ -89,7 +89,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: Jack Bishop # blog_name will be displayed in your blog page
-blog_description: a simple strawman theme for academics
+blog_description: Unlocking the power of the nucleus
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
