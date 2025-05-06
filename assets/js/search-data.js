@@ -451,9 +451,9 @@ ninja.data = [{
           section: "News",},{id: "news-new-website-created",
           title: 'New website created!',
           description: "",
-          section: "News",},{id: "projects-project-1",
-          title: 'project 1',
-          description: "with background image",
+          section: "News",},{id: "projects-nuclear-astrophysics-studies-with-hf-adnef",
+          title: 'Nuclear Astrophysics studies with HF-ADNeF',
+          description: "Understanding the origin of elements in our Universe",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
             },},{id: "projects-project-2",
