@@ -16,10 +16,9 @@
       year: 2018
       description:
         - Nuclear Physics
-        - title: Experimental investigation of alpha-gas states using high-multiplicity particle spectroscopy
+        - title: Thesis title: Experimental investigation of alpha-gas states using high-multiplicity particle spectroscopy
           contents:
-            - Sub-description 1.
-            - Sub-description 2.
+            - PhD Supervisors: Profs. Tzany Kokalova & Martin Freer
 
 - title: Experience
   type: time_table
@@ -28,29 +27,20 @@
       institution: Cyclotron Institute, Texas A&M University, USA
       year: 2018-2021
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
+        - title: Part of Rogachev research group
           contents:
-            - Sub-description 1.
-            - Sub-description 2.
+            - Development of TexAT TPC experimental techniques
+            - Nuclear structure & astrophysics
     - title: Assistant Research Scientist
       institution: Cyclotron Institute, Texas A&M University, USA
       year: 2021-2023
       description:
-        - Description 1.
-        - Description 2.
-
+        - title: Part of Rogachev research group
+          contents:
+            - Development of TeBAT TPC
     - title: Assistant Professor
       institution: School of Physics & Astronomy, University of Birmingham, UK
       year: 2023-Present
-
-- title: Open Source Projects
-  type: time_table
-  contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
 
 - title: Honors and Awards
   type: time_table
@@ -62,16 +52,13 @@
 - title: Academic Interests
   type: nested_list
   contents:
-    - title: Topic 1.
+    - title: Fundamental nuclear physics.
       items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
+        - Nuclear clustering: "How do nuclei arrange themselves in nature?"
+        - Nuclear astrophysics: "How are the elements in our Universe created?"
+    - title: Applied nuclear physics.
       items:
-        - Description 1.
-        - Description 2.
+        - Neutrons for nuclear fusion: "How do we deliver safe, clean and affordable nuclear fusion energy?"
+        - Neutron spectroscopy: "Activation of unknown materials to identify their contents"
 
-- title: Other Interests
-  type: list
-  contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+
