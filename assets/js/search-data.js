@@ -72,7 +72,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-a-post-with-plotly-js",
+            },{id: "post-test-post-with-jupyter-notebook",
+        
+          title: "Test post with jupyter notebook",
+        
+        description: "test example of a blog post with jupyter notebook",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/jupyter-notebook/";
+          
+        },
+      },{id: "post-a-post-with-plotly-js",
         
           title: "a post with plotly.js",
         
@@ -105,17 +116,6 @@ ninja.data = [{
             window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
           
         },
-      },{id: "post-a-post-that-can-be-cited",
-        
-          title: "a post that can be cited",
-        
-        description: "this is what a post that can be cited looks like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/post-citation/";
-          
-        },
       },{id: "post-a-post-with-advanced-image-components",
         
           title: "a post with advanced image components",
@@ -125,17 +125,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2024/advanced-images/";
-          
-        },
-      },{id: "post-a-post-with-jupyter-notebook",
-        
-          title: "a post with jupyter notebook",
-        
-        description: "an example of a blog post with jupyter notebook",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/jupyter-notebook/";
           
         },
       },{id: "post-displaying-external-posts-on-your-al-folio-blog",
