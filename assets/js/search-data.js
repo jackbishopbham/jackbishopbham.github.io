@@ -51,6 +51,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
+        },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
         },{id: "dropdown-news",
               title: "news",
               description: "",
@@ -58,14 +65,7 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "nav-blog",
-          title: "blog",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/blog/";
-          },
-        },{id: "post-test-post-with-jupyter-notebook",
+            },{id: "post-test-post-with-jupyter-notebook",
         
           title: "Test post with jupyter notebook",
         
