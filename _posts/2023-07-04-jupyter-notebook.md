@@ -1,8 +1,8 @@
 ---
 layout: post
-title: a post with jupyter notebook
-date: 2023-07-04 08:57:00-0400
-description: an example of a blog post with jupyter notebook
+title: Test post with jupyter notebook
+date: 2025-05-07 09:00:00-0000
+description: test example of a blog post with jupyter notebook
 tags: formatting jupyter
 categories: sample-posts
 giscus_comments: true
