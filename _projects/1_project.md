@@ -8,7 +8,7 @@ category: work
 related_publications: true
 ---
 
-Lorem ipsum:
+When we look at the world around us, it is full of a rich tapestry of different elements. We may very well ask ourselves where these elements come from? Models of the early Universe tell us that only hydrogen, helium and small amounts of other light elements are created in the Big Bang. Explaining where all the elements we see around us come from is a key area of nuclear physics known as nuclear astrophysics - the key insight is that is inside stars that the Universe creates a huge variety of different isotopes.
 
     ---
     layout: page
