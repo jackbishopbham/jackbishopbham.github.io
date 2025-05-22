@@ -128,11 +128,25 @@ ninja.data = [{
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
             },},{
+        id: 'social-acm',
+        title: 'ACM DL',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://dl.acm.org/profile/https://www.birmingham.ac.uk/staff/profiles/physics/bishop-jack/", "_blank");
+        },
+      },{
         id: 'social-email',
         title: 'email',
         section: 'Socials',
         handler: () => {
           window.open("mailto:%6A.%62%69%73%68%6F%70.%32@%62%68%61%6D.%61%63.%75%6B", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/jackbishopbham", "_blank");
         },
       },{
         id: 'social-linkedin',
@@ -147,6 +161,13 @@ ninja.data = [{
         section: 'Socials',
         handler: () => {
           window.open("https://orcid.org/0000-0002-4701-8625", "_blank");
+        },
+      },{
+        id: 'social-researchgate',
+        title: 'ResearchGate',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.researchgate.net/profile/https://www.researchgate.net/profile/Jack-Bishop-3/", "_blank");
         },
       },{
         id: 'social-rss',
