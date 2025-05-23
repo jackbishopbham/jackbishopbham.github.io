@@ -7,7 +7,7 @@ first_name: Jack
 middle_name: 
 last_name: Bishop
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
+  Find me at various other places above!
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   A simple, strawman theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 footer_text: >
@@ -124,12 +124,12 @@ disqus_shortname: JackBishop # put your disqus shortname
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
 external_sources:
-  - name: medium.com
-    rss_url: https://medium.com/@al-folio/feed
-  - name: Google Blog
-    posts:
-      - url: https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/
-        published_date: 2024-05-14
+  # - name: medium.com
+  #   rss_url: https://medium.com/@al-folio/feed
+  # - name: Google Blog
+  #   posts:
+  #     - url: https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/
+  #       published_date: 2024-05-14
 
 # -----------------------------------------------------------------------------
 # Newsletter
