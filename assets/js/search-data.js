@@ -122,9 +122,9 @@ ninja.data = [{
           description: "Understanding the origin of elements in our Universe",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
-            },},{id: "projects-project-3-with-very-long-name",
-          title: 'project 3 with very long name',
-          description: "a project that redirects to another website",
+            },},{id: "projects-tebat-tpc-development",
+          title: 'TeBAT TPC Development',
+          description: "A next-generation Time Projection Chamber",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
             },},{
