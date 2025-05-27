@@ -27,3 +27,5 @@ latest_posts:
 ---
 
 I am an experimental nuclear physicist who has a foot in both fundamental and applied nuclear physics. Find out more by following the links at the top to learn more about different Projects I am involved with, different Publications I have made, and different Teaching I am involved with.
+
+{% include _includes/head.html %}
