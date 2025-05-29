@@ -106,12 +106,7 @@ ninja.data = [{
             },},{id: "news-new-website-created",
           title: 'New website created!',
           description: "",
-          section: "News",},{id: "projects-nuclear-structure-studies",
-          title: 'Nuclear Structure Studies',
-          description: "How does the nucleus arrange itself?",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
-            },},{id: "projects-tebat-tpc-development",
+          section: "News",},{id: "projects-tebat-tpc-development",
           title: 'TeBAT TPC Development',
           description: "A next-generation Time Projection Chamber",
           section: "Projects",handler: () => {
@@ -131,6 +126,11 @@ ninja.data = [{
           description: "High-Flux Accelerator Driven Neutron Facility for nuclear science",
           section: "Projects",handler: () => {
               window.location.href = "/projects/6_project/";
+            },},{id: "projects-nuclear-structure-studies",
+          title: 'Nuclear Structure Studies',
+          description: "How does the nucleus arrange itself?",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/clustering/";
             },},{id: "projects-nuclear-astrophysics-studies-with-hf-adnef",
           title: 'Nuclear Astrophysics studies with HF-ADNeF',
           description: "Understanding the origin of elements in our Universe",
