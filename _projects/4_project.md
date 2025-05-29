@@ -3,7 +3,7 @@ layout: page
 title: Fusion energy
 description: Delivering clean, affordable energy
 img: assets/img/fusion.jpg
-importance: 1
+importance: 2
 category: applied
 related_publications: false
 ---
