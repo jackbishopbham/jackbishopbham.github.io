@@ -26,6 +26,6 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am an experimental nuclear physicist who has a foot in both [fundamental](https://jackbishopbham.github.io/projects/#fundamental) and [applied](https://jackbishopbham.github.io/projects/#applied) nuclear physics. Find out more by following the links to learn more about different Projects I am involved with, different [Publications](https://jackbishopbham.github.io/publications/) I have made, and different [Teaching](https://jackbishopbham.github.io/teaching/) I am involved with.
+I am an experimental nuclear physicist who has a foot in both [fundamental](https://jackbishopbham.github.io/projects/#fundamental) and [applied](https://jackbishopbham.github.io/projects/#applied) nuclear physics. Find out more by following the links to learn more about different [Projects](https://jackbishopbham.github.io/projects/) I am involved with, different [Publications](https://jackbishopbham.github.io/publications/) I have made, and different [Teaching](https://jackbishopbham.github.io/teaching/) I am involved with.
 
 {% include head.html %}
