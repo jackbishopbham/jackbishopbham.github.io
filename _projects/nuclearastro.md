@@ -12,9 +12,6 @@ When we look at the world around us, it is full of a rich tapestry of different 
 
 The fuel that drives stars to generate tremendous amounts of energy is (primarily) through nuclear fusion, joining together light nuclei to form heavier ones generates large amounts of energy. Eventually, fusing together lighter nuclei no longer becomes energetically favourable and around iron/nickel - fusion becomes an _endothermic_ reaction. So how are heavier elements produced? The answer lies in neutrons that are also produced inside of stars. In the later stage of a stars life, when it is in the Asymptotic Giant Branch (AGB) stage, the heavy *ashes* sequentially absorb neutrons and then undergo beta-decay (converting the neutrons in the nucleus to protons). This is known as the s-process, seen below:
 
-
-![Diagram showing the absorption of neutrons causing nuclei to become unbound and then beta decay - the s-process](/assets/img/s-process.jpg){: width="800px" }
-
 <img src="/assets/img/s-process.jpg" alt="Diagram showing the absorption of neutrons causing nuclei to become unbound and then beta decay - the s-process" width="800">
 
 
