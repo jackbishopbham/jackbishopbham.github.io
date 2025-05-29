@@ -110,6 +110,11 @@ ninja.data = [{
           description: "A next-generation Time Projection Chamber",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
+            },},{id: "projects-fusion-energy",
+          title: 'Fusion energy',
+          description: "Delivering clean, affordable energy",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_project/";
             },},{
         id: 'social-email',
         title: 'email',
