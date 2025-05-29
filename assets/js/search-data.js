@@ -115,6 +115,11 @@ ninja.data = [{
           description: "Delivering clean, affordable energy",
           section: "Projects",handler: () => {
               window.location.href = "/projects/4_project/";
+            },},{id: "projects-nuclear-forensics",
+          title: 'Nuclear forensics',
+          description: "Using neutrons to investigate the make-up of material",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_project/";
             },},{
         id: 'social-email',
         title: 'email',
