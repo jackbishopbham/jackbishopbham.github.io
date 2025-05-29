@@ -106,12 +106,7 @@ ninja.data = [{
             },},{id: "news-new-website-created",
           title: 'New website created!',
           description: "",
-          section: "News",},{id: "projects-nuclear-astrophysics-studies-with-hf-adnef",
-          title: 'Nuclear Astrophysics studies with HF-ADNeF',
-          description: "Understanding the origin of elements in our Universe",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-nuclear-structure-studies",
+          section: "News",},{id: "projects-nuclear-structure-studies",
           title: 'Nuclear Structure Studies',
           description: "How does the nucleus arrange itself?",
           section: "Projects",handler: () => {
@@ -136,6 +131,11 @@ ninja.data = [{
           description: "High-Flux Accelerator Driven Neutron Facility for nuclear science",
           section: "Projects",handler: () => {
               window.location.href = "/projects/6_project/";
+            },},{id: "projects-nuclear-astrophysics-studies-with-hf-adnef",
+          title: 'Nuclear Astrophysics studies with HF-ADNeF',
+          description: "Understanding the origin of elements in our Universe",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/nuclearastro/";
             },},{
         id: 'social-email',
         title: 'email',
