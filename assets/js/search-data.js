@@ -131,6 +131,11 @@ ninja.data = [{
           description: "Using neutrons to investigate the make-up of material",
           section: "Projects",handler: () => {
               window.location.href = "/projects/5_project/";
+            },},{id: "projects-hf-adnef-overview",
+          title: 'HF-ADNeF Overview',
+          description: "High-Flux Accelerator Driven Neutron Facility for nuclear science",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_project/";
             },},{
         id: 'social-email',
         title: 'email',
