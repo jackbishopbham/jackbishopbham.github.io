@@ -100,6 +100,11 @@ ninja.data = [{
           description: "Understanding the origin of elements in our Universe",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
+            },},{id: "projects-nuclear-structure-studies",
+          title: 'Nuclear Structure Studies',
+          description: "How does the nucleus arrange itself?",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
             },},{id: "projects-tebat-tpc-development",
           title: 'TeBAT TPC Development',
           description: "A next-generation Time Projection Chamber",
