@@ -65,15 +65,15 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-",
+            },{id: "post-neutrons-are-blue-a-manifesto",
         
-          title: "",
+          title: "Neutrons are blue - a manifesto",
         
-        description: "",
+        description: "Making sure society sees sense",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/2025-05-29-neutrons/";
+            window.location.href = "/blog/2025/neutrons/";
           
         },
       },{id: "post-test-post-with-jupyter-notebook",
