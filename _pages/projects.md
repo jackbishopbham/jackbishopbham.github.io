@@ -5,7 +5,7 @@ permalink: /projects/
 description: Details of current ongoing projects.
 nav: true
 nav_order: 3
-display_categories: [fundamental,applied]
+display_categories: [fundamental, applied]
 horizontal: false
 ---
 
