@@ -4,7 +4,7 @@ title: TeBAT TPC Development
 description: A next-generation Time Projection Chamber
 img: assets/img/TeBAT_CAD.jpg
 importance: 1
-category: work
+category: fundamental
 related_publications: false
 ---
 
