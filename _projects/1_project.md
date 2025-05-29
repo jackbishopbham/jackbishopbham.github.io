@@ -27,6 +27,8 @@ The fuel that drives stars to generate tremendous amounts of energy is (primaril
     Selection of images showing the HF-ADNeF facility.
 </div>
 
+The Birmimgham High-Flux Accelerator-Driven Neutron Facility (HF-ADNeF) can produce up to 3 $\times 10^{13}$ n/s. We use those neutrons by bombarding a target which then absorbs the neutron, often making it radioactive. To understand the process of stellar nucleosynthesis, we need to know how *likely* it is for the different targets to absorb neutrons at different neutron energies. We call this probability, a cross-section. After blasting a sample with a large number of neutrons, we then stop the accelerator and take the radioactive sample to a highly-sensitive radiation detection such as a Hyper-Pure Germanium (HPGe) detector where was can measure the characeristic gamma ray fingerprints that tell us how much of the new radioactive species we have made.
+
 More info here: {% cite Wheldon01102024 %}.
 
 {% raw %}
