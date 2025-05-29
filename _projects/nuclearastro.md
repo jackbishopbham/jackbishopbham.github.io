@@ -15,6 +15,9 @@ The fuel that drives stars to generate tremendous amounts of energy is (primaril
 
 ![Diagram showing the absorption of neutrons causing nuclei to become unbound and then beta decay - the s-process](/assets/img/s-process.jpg){: width="800px" }
 
+<img src="/assets/img/s-process.jpg" alt="Diagram showing the absorption of neutrons causing nuclei to become unbound and then beta decay - the s-process" width="800">
+
+
 With a very high intensity of neutrons, we have access to directly measure these nucleosynthesis reactions here on Earth. This is a possibility with the Birmingham High Flux Accelerator-Driven Neutron Facility, HF-ADNeF.
 
 <div class="row">
