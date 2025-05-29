@@ -106,17 +106,7 @@ ninja.data = [{
             },},{id: "news-new-website-created",
           title: 'New website created!',
           description: "",
-          section: "News",},{id: "projects-fusion-energy",
-          title: 'Fusion energy',
-          description: "Delivering clean, affordable energy",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/4_project/";
-            },},{id: "projects-nuclear-forensics",
-          title: 'Nuclear forensics',
-          description: "Using neutrons to investigate the make-up of material",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/5_project/";
-            },},{id: "projects-hf-adnef-overview",
+          section: "News",},{id: "projects-hf-adnef-overview",
           title: 'HF-ADNeF Overview',
           description: "High-Flux Accelerator Driven Neutron Facility for nuclear science",
           section: "Projects",handler: () => {
@@ -126,6 +116,16 @@ ninja.data = [{
           description: "How does the nucleus arrange itself?",
           section: "Projects",handler: () => {
               window.location.href = "/projects/clustering/";
+            },},{id: "projects-nuclear-forensics",
+          title: 'Nuclear forensics',
+          description: "Using neutrons to investigate the make-up of material",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/forensics/";
+            },},{id: "projects-fusion-energy",
+          title: 'Fusion energy',
+          description: "Delivering clean, affordable energy",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/fusion/";
             },},{id: "projects-nuclear-astrophysics-studies-with-hf-adnef",
           title: 'Nuclear Astrophysics studies with HF-ADNeF',
           description: "Understanding the origin of elements in our Universe",
