@@ -8,4 +8,4 @@ category: fundamental
 related_publications: false
 ---
 
-How does the nucleus arrange itself?
+How does the nucleus arrange itself? What can we learn about the nuclear strong force from this?
