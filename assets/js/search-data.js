@@ -65,18 +65,7 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-",
-        
-          title: "",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/2022-08-01-cauldrons/";
-          
-        },
-      },{id: "post-automatic-outreach-materials-with-ai",
+            },{id: "post-automatic-outreach-materials-with-ai",
         
           title: "Automatic Outreach Materials with AI",
         
@@ -129,6 +118,17 @@ ninja.data = [{
         handler: () => {
           
             window.open("https://science.osti.gov/np/Highlights/2023/NP-2023-08-a", "_blank");
+          
+        },
+      },{id: "post-nuclear-cauldrons-studying-star-burning-with-radioactive-and-neutron-beams",
+        
+          title: 'Nuclear Cauldrons - Studying Star Burning with Radioactive and Neutron Beams <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "Using Earth-based particle accelerators, scientists measure the reactions that take place in stars to produce carbon.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://science.osti.gov/np/Highlights/2022/NP-2022-08-b", "_blank");
           
         },
       },{id: "post-the-life-and-death-of-stars-viewing-nuclear-reactions-to-understand-the-universe-around-us",
