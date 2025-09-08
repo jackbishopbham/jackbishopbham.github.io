@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-neutrons-are-blue-a-manifesto",
+            },{id: "post-automatic-outreach-materials-with-ai",
+        
+          title: "Automatic Outreach Materials with AI",
+        
+        description: "Automatic Outreach Materials with AI",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/outreach/";
+          
+        },
+      },{id: "post-neutrons-are-blue-a-manifesto",
         
           title: "Neutrons are blue - a manifesto",
         
