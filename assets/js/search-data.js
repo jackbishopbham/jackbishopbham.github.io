@@ -142,6 +142,17 @@ ninja.data = [{
             window.open("https://science.osti.gov/np/Highlights/2020/NP-2020-10-b", "_blank");
           
         },
+      },{id: "post-scientific-american-article-carbon-conundrum-experiment-aims-to-re-create-synthesis-of-key-element",
+        
+          title: 'Scientific American article. Carbon Conundrum - Experiment Aims to Re-create Synthesis of Key... <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "An Ohio particle accelerator will test an alternative idea of how the universe’s carbon came to be",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://www.scientificamerican.com/article/carbon-conundrum-experiment-aims-to-re-create-synthesis-of-key-element/", "_blank");
+          
+        },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
