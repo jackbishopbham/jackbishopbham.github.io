@@ -98,22 +98,11 @@ ninja.data = [{
             window.location.href = "/blog/2025/jupyter-notebook/";
           
         },
-      },{id: "post-a-post-with-advanced-image-components",
+      },{id: "post-scientists-make-the-first-observation-of-a-nucleus-decaying-into-four-particles-after-beta-decay",
         
-          title: "a post with advanced image components",
+          title: 'Scientists Make the First Observation of a Nucleus Decaying into Four Particles After... <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         
-        description: "this is what advanced image components could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/advanced-images/";
-          
-        },
-      },{id: "post-a-post-with-redirect",
-        
-          title: 'a post with redirect <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
-        
-        description: "Scientists Make the First Observation of a Nucleus Decaying into Four Particles After Beta Decay",
+        description: "For the first time, scientists observe a new and rare decay mode where oxygen-13 breaks into three helium nuclei and a proton following beta decay.",
         section: "Posts",
         handler: () => {
           
