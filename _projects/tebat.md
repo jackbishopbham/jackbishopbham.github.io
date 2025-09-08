@@ -20,4 +20,9 @@ Time Projection Chambers aim to make the most of every single beam ion: if you c
 
 An important aspect of improving TPC technology is to improve the position resolution with which reconstruct these tracks. With a pixel-based approach to reconstructing, the position resolution is limited by the pad size. In the previous TPC, TexAT, this was 1.75 mm x 3.5 mm. However, advances in TPCs mean that one must no longer be limited to the size of a pad pixel. By deliberately spreading out the charge across multiple pads (with a known distribution), it is possible to generate sub-pad position resolution. In this way, the new TeBAT TPC uses DLC (Diamond-Like Carbon) as a resistive layer to spread the charge with a characteristic RC value and get a position resolution of the order of <0.5 mm from a pad size of 3 mm x 3 mm.
 
-<img src="/assets/img/DLC2.png" alt="" width="800">
+<img src="/assets/img/DLC2.png" alt="DLC layer showing the idea of spreading charge across multiple pads" width="800">
+
+
+<img src="/assets/img/TeBAT_CAD.jpg" alt="CAD for TeBAT" width="800">
+
+More information on TexAT & TeBAT can be found in <a href="/assets/pdf/TPC2023.pdf">this presentation</a> given as part of TPC2023 in College Station, TX, USA.
