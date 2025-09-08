@@ -120,6 +120,17 @@ ninja.data = [{
             window.open("https://science.osti.gov/np/Highlights/2022/NP-2022-08-b", "_blank");
           
         },
+      },{id: "post-novel-particle-detector-used-to-study-alternate-path-to-carbon-creation-in-stars",
+        
+          title: 'Novel particle detector used to study alternate path to carbon creation in stars... <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "phys.org article",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://phys.org/news/2022-04-particle-detector-alternate-path-carbon.html", "_blank");
+          
+        },
       },{id: "post-the-life-and-death-of-stars-viewing-nuclear-reactions-to-understand-the-universe-around-us",
         
           title: 'The Life and Death of Stars - Viewing Nuclear Reactions to Understand the... <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
