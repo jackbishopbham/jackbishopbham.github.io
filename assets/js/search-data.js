@@ -109,6 +109,28 @@ ninja.data = [{
             window.location.href = "/blog/2024/advanced-images/";
           
         },
+      },{id: "post-a-post-with-redirect",
+        
+          title: 'a post with redirect <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "Scientists Make the First Observation of a Nucleus Decaying into Four Particles After Beta Decay",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://science.osti.gov/np/Highlights/2023/NP-2023-08-a", "_blank");
+          
+        },
+      },{id: "post-the-life-and-death-of-stars-viewing-nuclear-reactions-to-understand-the-universe-around-us",
+        
+          title: 'The Life and Death of Stars - Viewing Nuclear Reactions to Understand the... <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "Studying nuclear reactions using a Time Projection Chamber allows scientists to study stars’ internal processes.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://science.osti.gov/np/Highlights/2020/NP-2020-10-b", "_blank");
+          
+        },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
