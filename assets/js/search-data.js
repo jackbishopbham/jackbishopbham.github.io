@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-automatic-outreach-materials-with-ai",
+            },{id: "post-phd-positions-available",
+        
+          title: "PhD Positions Available",
+        
+        description: "Apply Now",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/PhDPosition/";
+          
+        },
+      },{id: "post-automatic-outreach-materials-with-ai",
         
           title: "Automatic Outreach Materials with AI",
         
