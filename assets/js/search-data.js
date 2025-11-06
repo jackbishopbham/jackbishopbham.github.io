@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-phd-positions-available",
+            },{id: "post-completion-of-pgche",
+        
+          title: "Completion of PGCHE",
+        
+        description: "Postgraduate Certificate in Higher Education",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/PGCHE/";
+          
+        },
+      },{id: "post-phd-positions-available",
         
           title: "PhD Positions Available",
         
