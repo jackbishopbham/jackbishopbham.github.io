@@ -73,6 +73,17 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
+            window.location.href = "/blog/2025/SecondPhDPosition/";
+          
+        },
+      },{id: "post-phd-positions-available",
+        
+          title: "PhD Positions Available",
+        
+        description: "Apply Now",
+        section: "Posts",
+        handler: () => {
+          
             window.location.href = "/blog/2025/PhDPosition/";
           
         },
