@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-completion-of-pgche",
+            },{id: "post-irena-online-seminar",
+        
+          title: "IReNA Online Seminar",
+        
+        description: "Recent Talk",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/Seminar/";
+          
+        },
+      },{id: "post-completion-of-pgche",
         
           title: "Completion of PGCHE",
         
