@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/news/";
               },
-            },{id: "post-irena-online-seminar",
+            },{id: "post-ukaea-senior-visiting-fellow",
+        
+          title: "UKAEA Senior Visiting Fellow",
+        
+        description: "Recent Update",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/UKAEA/";
+          
+        },
+      },{id: "post-irena-online-seminar",
         
           title: "IReNA Online Seminar",
         
