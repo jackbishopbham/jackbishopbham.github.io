@@ -20,8 +20,12 @@ permalink: /racetimer/
 </head>
 <body>
 
-<h1 id="title">Sailing Race Timer</h1>
+<h1 id="title">Sailing Race Timer V1.1</h1>
 
+<div>
+    Start time (minutes): 
+    <input type="number" id="startTimeInput" value="10" min="1">
+</div>
 <div>
     Pre-start minutes (comma-separated): 
     <input type="text" id="prestartInput" value="10,5,4,1">
@@ -154,9 +158,27 @@ function tick(){
 function formatTime(sec){ let m=Math.floor(sec/60), s=sec%60; return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); }
 
 // ===== Controls =====
-function startTimer(){ initAudio(); updateSignals(); if(!running){ running=true; timerId=setInterval(tick,tickInterval); } }
+function startTimer(){ 
+    initAudio(); 
+    updateSignals(); 
+    if(!running){ 
+        running=true; 
+        timerId=setInterval(tick,tickInterval); 
+    } 
+}
+
 function stopTimer(){ running=false; clearInterval(timerId); }
-function resetTimer(){ stopTimer(); prestart=true; remaining=10*60; elapsed=0; document.getElementById("time").textContent=formatTime(remaining); document.getElementById("time").style.color="navy"; document.getElementById("info").textContent=""; }
+
+function resetTimer(){
+    stopTimer();
+    prestart = true;
+    const startMin = parseInt(document.getElementById("startTimeInput").value) || 10;
+    remaining = startMin * 60; // convert to seconds
+    elapsed = 0;
+    document.getElementById("time").textContent = formatTime(remaining);
+    document.getElementById("time").style.color = "navy";
+    document.getElementById("info").textContent = "";
+}
 
 // ===== Test Mode =====
 function toggleTestMode(){
