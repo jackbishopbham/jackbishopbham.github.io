@@ -8,23 +8,74 @@ let signals={0:"START"};
 
 // ===== Web Audio =====
 let audioCtx=null;
-function initAudio(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==="suspended") audioCtx.resume(); }
-function playTone(freq,duration){ 
-    if(!audioCtx)return;
-    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
-    osc.frequency.value=freq; osc.type="sine";
-    gain.gain.setValueAtTime(0.2,audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+duration);
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(); osc.stop(audioCtx.currentTime+duration);
-    if(flashEnabled) flashScreen(duration*1000);
+function initAudio(){ 
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); 
+    if(audioCtx.state==="suspended") audioCtx.resume(); 
 }
-function shortBeep(){ playTone(1200,0.2); }
-function longBeep(){ playTone(700,0.8); }
 
-// ===== Screen Flash =====
-function flashScreen(ms){ const originalBg=document.body.style.background; document.body.style.background="yellow"; setTimeout(()=>{document.body.style.background=originalBg;}, ms); }
-function toggleFlash(){ flashEnabled=!flashEnabled; document.getElementById("flashToggleBtn").textContent=flashEnabled?"Flash: ON":"Flash: OFF"; }
+function playSiren(duration=1){
+    if(!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    // Siren effect: two oscillators, one sweeps frequency
+    osc1.type = "square";
+    osc2.type = "sine";
+
+    // Sweep osc1 from 600Hz → 1200Hz
+    osc1.frequency.setValueAtTime(600, now);
+    osc1.frequency.linearRampToValueAtTime(1200, now + duration/2);
+    osc1.frequency.linearRampToValueAtTime(600, now + duration);
+
+    osc2.frequency.value = 1000;
+
+    gain.gain.setValueAtTime(0.5, now); // louder
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + duration);
+    osc2.stop(now + duration);
+
+    // Flash screen
+    flashScreen(duration*1000);
+
+    // Vibrate phone if supported
+    if(navigator.vibrate) navigator.vibrate(duration*500);
+}
+
+function shortBeep(){ playSiren(0.3); }
+function longBeep(){ playSiren(1.0); }
+
+// ===== Screen Flash / Siren Flash =====
+function flashScreen(ms){
+    if(!flashEnabled) return;
+    const originalBg = document.body.style.background;
+    let step = 0;
+    const colors = ["#ff0","#f00"]; // yellow → red
+    const interval = 100; // ms per color change
+    const flashes = Math.floor(ms / interval);
+
+    const flashInterval = setInterval(() => {
+        document.body.style.background = colors[step % colors.length];
+        step++;
+        if(step >= flashes){
+            clearInterval(flashInterval);
+            document.body.style.background = originalBg;
+        }
+    }, interval);
+}
+
+function toggleFlash(){
+    flashEnabled = !flashEnabled;
+    document.getElementById("flashToggleBtn").textContent = flashEnabled ? "Flash: ON" : "Flash: OFF";
+}
 
 // ===== Timer Helpers =====
 function updateSignals(){
@@ -35,7 +86,7 @@ function updateSignals(){
 
 // ===== Timer Tick =====
 function tick(){
-    if(!running)return;
+    if(!running) return;
     const info=document.getElementById("info");
     const warningSec=parseInt(document.getElementById("warningSeconds").value)||10;
     const postInterval=parseInt(document.getElementById("postStartInterval").value)||1;
