@@ -4,7 +4,7 @@ title: "Race Timer"
 permalink: /racetimer/
 ---
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -125,4 +125,3 @@ document.getElementById("title").addEventListener("click",()=>{
 </script>
 </body>
 </html>
-§
