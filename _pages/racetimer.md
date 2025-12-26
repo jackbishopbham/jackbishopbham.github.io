@@ -4,40 +4,40 @@ title: "Race Timer"
 permalink: /racetimer/
 ---
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sailing Race Timer</title>
+
 <style>
-    body { font-family: Arial, sans-serif; background: #eef4ff; text-align: center; margin:0; padding:20px; transition: background 0.1s ease; }
-    #time { font-size:72px; margin:30px 0; color:navy; }
-    #info { font-size:22px; height:30px; }
-    button, input { font-size:18px; padding:10px; margin:5px; }
-    input { width: 80px; text-align:center; }
-    #hiddenTest { font-size:10px; opacity:0.1; border:none; padding:2px; margin:2px; cursor:pointer; }
+body {
+    font-family: Arial, sans-serif;
+    background: #eef4ff;
+    text-align: center;
+    margin: 0;
+    padding: 20px 20px 150px;
+}
+#time { font-size: 72px; margin: 30px 0; color: navy; }
+#info { font-size: 24px; height: 36px; font-weight: bold; }
+button, input { font-size: 20px; padding: 12px; margin: 6px; }
+input[type="number"] { width: 130px; }
+input[type="text"] { width: 260px; }
+#hiddenTest { font-size: 10px; opacity: 0.1; border: none; }
 </style>
 </head>
+
 <body>
 
-<h1 id="title">Sailing Race Timer V1.1</h1>
+<h1 id="title">Sailing Race Timer V1.1.4</h1>
 
-<div>
-    Start time (minutes): 
-    <input type="number" id="startTimeInput" value="10" min="1">
-</div>
-<div>
-    Pre-start minutes (comma-separated): 
-    <input type="text" id="prestartInput" value="10,5,4,1">
-</div>
-<div>
-    Post-start interval (minutes): 
-    <input type="number" id="postStartInterval" value="1" min="1">
-</div>
-<div>
-    10-second warning duration (seconds): 
-    <input type="number" id="warningSeconds" value="10" min="1" max="30">
-</div>
+<div>Start time (minutes): <input type="number" id="startTimeInput" value="10"></div>
+<div>Pre-start minutes: <input type="text" id="prestartInput" value="10,5,4,1"></div>
+<div>Long beep minutes: <input type="text" id="longBeepInput" value="4"></div>
+<div>Post-start interval (minutes): <input type="number" id="postStartInterval" value="1"></div> 
+<div>Post-race duration (minutes, 0 = none): <input type="number" id="postRaceDuration" value="0"></div>
+<div>Countdown duration (seconds): <input type="number" id="warningSeconds" value="10"></div>
 
 <div id="time">10:00</div>
 <div id="info"></div>
@@ -45,155 +45,187 @@ permalink: /racetimer/
 <button onclick="startTimer()">Start</button>
 <button onclick="stopTimer()">Stop</button>
 <button onclick="resetTimer()">Reset</button>
-<button id="flashToggleBtn" onclick="toggleFlash()">Flash: ON</button>
-
-<!-- Hidden test mode button -->
+<button onclick="toggleFlash()" id="flashToggleBtn">Flash: ON</button>
 <button id="hiddenTest" onclick="toggleTestMode()">Test Mode</button>
 
 <script>
-// ===== Timer Variables =====
-let running=false, prestart=true, remaining=10*60, elapsed=0, timerId=null;
-let flashEnabled=true, testMode=false, tickInterval=1000;
-let signals={0:"START"};
+// =====================
+// STATE
+// =====================
+let running=false, prestart=true, raceFinished=false;
+let remaining=600, elapsed=0;
+let timerId=null, tickInterval=1000;
+let flashEnabled=true, testMode=false;
 
-// ===== Web Audio =====
+let signals={};
+let longBeepMinutes=[];
+
+// =====================
+// AUDIO
+// =====================
 let audioCtx=null;
-function initAudio(){ 
-    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); 
-    if(audioCtx.state==="suspended") audioCtx.resume(); 
+function initAudio(){
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended") audioCtx.resume();
 }
 
-function playSiren(duration=1){
+function playKlaxon(d=0.25, base=380, sweep=520, vol=0.6){
     if(!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const osc1 = audioCtx.createOscillator();
-    const osc2 = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const now=audioCtx.currentTime;
+    const o1=audioCtx.createOscillator();
+    const o2=audioCtx.createOscillator();
+    const g=audioCtx.createGain();
 
-    // Siren effect: two oscillators, one sweeps frequency
-    osc1.type = "square";
-    osc2.type = "sine";
+    o1.type="square"; o2.type="sawtooth";
+    o1.frequency.setValueAtTime(base,now);
+    o1.frequency.linearRampToValueAtTime(sweep,now+d);
+    o2.frequency.setValueAtTime(base/2,now);
 
-    // Sweep osc1 from 600Hz → 1200Hz
-    osc1.frequency.setValueAtTime(600, now);
-    osc1.frequency.linearRampToValueAtTime(1200, now + duration/2);
-    osc1.frequency.linearRampToValueAtTime(600, now + duration);
+    g.gain.setValueAtTime(0.001,now);
+    g.gain.exponentialRampToValueAtTime(vol,now+0.02);
+    g.gain.exponentialRampToValueAtTime(0.001,now+d);
 
-    osc2.frequency.value = 1000;
-
-    gain.gain.setValueAtTime(0.5, now); // louder
-    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + duration);
-    osc2.stop(now + duration);
-
-    // Flash screen
-    flashScreen(duration*1000);
-
-    // Vibrate phone if supported
-    if(navigator.vibrate) navigator.vibrate(duration*500);
+    o1.connect(g); o2.connect(g); g.connect(audioCtx.destination);
+    o1.start(now); o2.start(now);
+    o1.stop(now+d); o2.stop(now+d);
 }
 
-function shortBeep(){ playSiren(0.3); }
-function longBeep(){ playSiren(1.0); }
+function shortBeep(){ playKlaxon(0.25); }
+function longBeep(){ playKlaxon(1.1,360,520,0.75); }
 
-// ===== Screen Flash / Siren Flash =====
-function flashScreen(ms){
-    if(!flashEnabled) return;
-    const originalBg = document.body.style.background;
-    let step = 0;
-    const colors = ["#ff0","#f00"]; // yellow → red
-    const interval = 100; // ms per color change
-    const flashes = Math.floor(ms / interval);
-
-    const flashInterval = setInterval(() => {
-        document.body.style.background = colors[step % colors.length];
-        step++;
-        if(step >= flashes){
-            clearInterval(flashInterval);
-            document.body.style.background = originalBg;
-        }
-    }, interval);
+function finishKlaxon(){
+    playKlaxon(2.6,200,420,0.95);
 }
 
-function toggleFlash(){
-    flashEnabled = !flashEnabled;
-    document.getElementById("flashToggleBtn").textContent = flashEnabled ? "Flash: ON" : "Flash: OFF";
-}
-
-// ===== Timer Helpers =====
+// =====================
+// SIGNAL SETUP (FIXED)
+// =====================
 function updateSignals(){
-    const input=document.getElementById("prestartInput").value;
-    const mins=input.split(",").map(x=>parseInt(x.trim())).filter(x=>!isNaN(x)&&x>0);
-    signals={}; mins.forEach(m=>{signals[m*60]=`${m} min`;}); signals[0]="START";
+    signals={};
+
+    const pre = document.getElementById("prestartInput").value
+        .split(",").map(x=>parseInt(x)).filter(x=>x>0);
+
+    longBeepMinutes = document.getElementById("longBeepInput").value
+        .split(",").map(x=>parseInt(x)).filter(x=>x>0);
+
+    // UNION of both lists
+    const allMinutes = new Set([...pre, ...longBeepMinutes]);
+
+    allMinutes.forEach(m=>{
+        signals[m*60]=`${m} min`;
+    });
+
+    signals[0]="START";
 }
 
-// ===== Timer Tick =====
+// =====================
+// TICK (FIXED)
+// =====================
 function tick(){
-    if(!running) return;
+    if(!running || raceFinished) return;
+
     const info=document.getElementById("info");
-    const warningSec=parseInt(document.getElementById("warningSeconds").value)||10;
-    const postInterval=parseInt(document.getElementById("postStartInterval").value)||1;
+    const warn=parseInt(warningSeconds.value)||10;
+    const postInterval=parseInt(postStartInterval.value)||1;
+    const postRace=parseInt(postRaceDuration.value)||0;
 
     if(prestart){
-        if(signals[remaining-warningSec]){ info.textContent=`${warningSec} second warning`; shortBeep(); }
-        if(signals[remaining]){ info.textContent=signals[remaining]; longBeep(); if(remaining===0){prestart=false; document.getElementById("time").style.color="darkgreen"; return;} }
-        if(!signals[remaining]&&!signals[remaining-warningSec]) info.textContent="";
-        remaining--; document.getElementById("time").textContent=formatTime(remaining);
-    } else {
-        elapsed++;
-        if(elapsed % (postInterval*60) === (postInterval*60-warningSec)){ info.textContent=`${warningSec} seconds`; shortBeep(); }
-        if(elapsed % (postInterval*60) ===0){ info.textContent=`${elapsed/postInterval} min`; longBeep(); }
-        if(elapsed % (postInterval*60) !== (postInterval*60-warningSec) && elapsed % (postInterval*60)!==0) info.textContent="";
-        document.getElementById("time").textContent=formatTime(elapsed);
+
+// ---- COUNTDOWN BEFORE EACH PRE-START SIGNAL ----
+for (const t in signals) {
+    const sigTime = parseInt(t);
+
+    // Countdown occurs BEFORE the signal (e.g. 5:10 → 5:01)
+    if (remaining > sigTime && remaining <= sigTime + warn) {
+        info.textContent = (remaining - sigTime).toString();
+        shortBeep();
+        break;
     }
 }
 
-function formatTime(sec){ let m=Math.floor(sec/60), s=sec%60; return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); }
 
-// ===== Controls =====
-function startTimer(){ 
-    initAudio(); 
-    updateSignals(); 
-    if(!running){ 
-        running=true; 
-        timerId=setInterval(tick,tickInterval); 
-    } 
+        // ---- SIGNAL ITSELF ----
+        if(signals[remaining]){
+            info.textContent=signals[remaining];
+            const mins=remaining/60;
+
+            if(remaining===0 || longBeepMinutes.includes(mins)){
+                longBeep();
+            } else {
+                shortBeep();
+            }
+
+            if(remaining===0){
+                prestart=false;
+                time.style.color="darkgreen";
+                return;
+            }
+        }
+
+        time.textContent=formatTime(remaining);
+        remaining--;
+
+    } else {
+        elapsed++;
+
+        if(postRace>0 && elapsed>=postRace*60){
+            info.textContent="RACE FINISHED";
+            time.textContent=formatTime(elapsed);
+            finishKlaxon();
+            stopTimer();
+            raceFinished=true;
+            return;
+        }
+
+        if(elapsed%(postInterval*60)===0){
+            info.textContent=`${elapsed/60} min`;
+            longBeep();
+        } else info.textContent="";
+
+        time.textContent=formatTime(elapsed);
+    }
 }
 
+function formatTime(s){
+    return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+}
+
+// =====================
+// CONTROLS
+// =====================
+function startTimer(){
+    initAudio();
+    updateSignals();
+    if(!running){
+        running=true;
+        timerId=setInterval(tick,tickInterval);
+    }
+}
 function stopTimer(){ running=false; clearInterval(timerId); }
 
 function resetTimer(){
     stopTimer();
-    prestart = true;
-    const startMin = parseInt(document.getElementById("startTimeInput").value) || 10;
-    remaining = startMin * 60; // convert to seconds
-    elapsed = 0;
-    document.getElementById("time").textContent = formatTime(remaining);
-    document.getElementById("time").style.color = "navy";
-    document.getElementById("info").textContent = "";
+    prestart=true; raceFinished=false;
+    remaining=(parseInt(startTimeInput.value)||10)*60;
+    elapsed=0;
+    time.textContent=formatTime(remaining);
+    time.style.color="navy";
+    info.textContent="";
 }
 
-// ===== Test Mode =====
+// =====================
+// TEST MODE
+// =====================
 function toggleTestMode(){
     testMode=!testMode;
-    if(testMode){ tickInterval=100; alert("Test mode ON: timer runs 10x faster"); }
-    else { tickInterval=1000; alert("Test mode OFF"); }
-    if(running){ clearInterval(timerId); timerId=setInterval(tick,tickInterval); }
+    tickInterval=testMode?100:1000;
+    alert(testMode?"Test mode ON":"Test mode OFF");
+    if(running){
+        clearInterval(timerId);
+        timerId=setInterval(tick,tickInterval);
+    }
 }
-
-// Optional: make hidden test button appear when title is clicked 5x
-let clickCount=0;
-document.getElementById("title").addEventListener("click",()=>{
-    clickCount++;
-    if(clickCount>=5){ document.getElementById("hiddenTest").style.opacity=0.6; document.getElementById("hiddenTest").style.fontSize="14px"; clickCount=0; }
-});
 </script>
 </body>
 </html>
