@@ -135,7 +135,7 @@ if (prestart) {
             shortBeep();
 
             // 🔔 LAST countdown second → LONG KLAXON
-            if (remaining === sigTime + 1) {
+            if (remaining === sigTime) {
                 countdownEndKlaxon();
             }
             break;
