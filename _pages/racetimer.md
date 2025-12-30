@@ -123,43 +123,44 @@ function tick(){
     const warn=parseInt(warningSeconds.value)||10;
     const postInterval=parseInt(postStartInterval.value)||1;
     const postRace=parseInt(postRaceDuration.value)||0;
+if (prestart) {
 
-    if(prestart){
+    for (const t in signals) {
+        const sigTime = parseInt(t);
 
-        // COUNTDOWN BEEPS
-        for(const t in signals){
-            const sigTime=parseInt(t);
-            if(remaining>sigTime && remaining<=sigTime+warn){
-                const cd = remaining - sigTime;
-                document.getElementById("info").textContent = cd;
-                shortBeep();
+        // Countdown window
+        if (remaining > sigTime && remaining <= sigTime + warn) {
+            const cd = remaining - sigTime;
+            info.textContent = cd.toString();
+            shortBeep();
 
-                // 🔔 countdown just finished → LONG KLAXON
-                if(cd === 0){
-                    countdownEndKlaxon();
-                }
-                break;
+            // 🔔 LAST countdown second → LONG KLAXON
+            if (remaining === sigTime + 1) {
+                countdownEndKlaxon();
             }
+            break;
         }
+    }
 
-        // SIGNAL LABEL + NORMAL SIGNAL BEEP
-        if(signals[remaining]){
-            document.getElementById("info").textContent = signals[remaining];
-            const mins = remaining / 60;
-            if(remaining === 0 || longBeepMinutes.includes(mins)){
-                longBeep();
-            }
+    // Signal moment (flag / gun)
+    if (signals[remaining]) {
+        info.textContent = signals[remaining];
+        const mins = remaining / 60;
+
+        if (remaining === 0 || longBeepMinutes.includes(mins)) {
+            longBeep();
         }
+    }
 
-        document.getElementById("time").textContent = formatTime(remaining);
-        remaining--;
+    time.textContent = formatTime(remaining);
+    remaining--;
 
-        if(remaining < 0){
-            prestart=false;
-            document.getElementById("time").style.color="darkgreen";
-        }
-
-    } else {
+    if (remaining < 0) {
+        prestart = false;
+        time.style.color = "darkgreen";
+    }
+}
+ else {
         elapsed++;
 
         if(postRace>0 && elapsed>=postRace*60){
