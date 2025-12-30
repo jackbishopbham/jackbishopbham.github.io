@@ -10,7 +10,6 @@ let timerId=null, tickInterval=1000;
 let testMode=false;
 
 let signals={}, longBeepMinutes=[];
-let activeCountdownSignal=null;
 
 // =====================
 // AUDIO
@@ -30,6 +29,7 @@ function playKlaxon(d, base, sweep, vol){
 
     o1.type="square";
     o2.type="sawtooth";
+
     o1.frequency.setValueAtTime(base,now);
     o1.frequency.linearRampToValueAtTime(sweep,now+d);
     o2.frequency.setValueAtTime(base/2,now);
@@ -79,37 +79,35 @@ function tick(){
 
     if(prestart){
 
-        // COUNTDOWN PHASE
-        activeCountdownSignal=null;
+        // COUNTDOWN BEEPS
         for(const t in signals){
             const sigTime=parseInt(t);
             if(remaining>sigTime && remaining<=sigTime+warn){
-                activeCountdownSignal=sigTime;
-                document.getElementById("info").textContent=(remaining-sigTime);
+                const cd = remaining - sigTime;
+                document.getElementById("info").textContent = cd;
                 shortBeep();
+
+                // 🔔 countdown just finished → LONG KLAXON
+                if(cd === 0){
+                    countdownEndKlaxon();
+                }
                 break;
             }
         }
 
-        // COUNTDOWN JUST FINISHED → KLAXON
-        if(activeCountdownSignal!==null && remaining===activeCountdownSignal){
-            countdownEndKlaxon();
-        }
-
-        // SIGNAL DISPLAY
+        // SIGNAL LABEL + NORMAL SIGNAL BEEP
         if(signals[remaining]){
-            document.getElementById("info").textContent=signals[remaining];
-
-            const mins=remaining/60;
-            if(remaining===0||longBeepMinutes.includes(mins)){
+            document.getElementById("info").textContent = signals[remaining];
+            const mins = remaining / 60;
+            if(remaining === 0 || longBeepMinutes.includes(mins)){
                 longBeep();
             }
         }
 
-        document.getElementById("time").textContent=formatTime(remaining);
+        document.getElementById("time").textContent = formatTime(remaining);
         remaining--;
 
-        if(remaining<0){
+        if(remaining < 0){
             prestart=false;
             document.getElementById("time").style.color="darkgreen";
         }
@@ -117,7 +115,7 @@ function tick(){
     } else {
         elapsed++;
 
-        if(postRace>0&&elapsed>=postRace*60){
+        if(postRace>0 && elapsed>=postRace*60){
             document.getElementById("info").textContent="RACE FINISHED";
             document.getElementById("time").textContent=formatTime(elapsed);
             finishKlaxon();
