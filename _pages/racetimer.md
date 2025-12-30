@@ -4,7 +4,7 @@ title: "Race Timer"
 permalink: /racetimer/
 ---
 
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -30,12 +30,12 @@ input[type="text"] { width: 260px; }
 
 <body>
 
-<h1 id="title">Sailing Race Timer V1.1.5</h1>
+<h1 id="title">Sailing Race Timer V1.1.6</h1>
 
 <div>Start time (minutes): <input type="number" id="startTimeInput" value="10"></div>
 <div>Pre-start minutes: <input type="text" id="prestartInput" value="10,5,4,1"></div>
 <div>Long beep minutes: <input type="text" id="longBeepInput" value="4"></div>
-<div>Post-start interval (minutes): <input type="number" id="postStartInterval" value="1"></div> 
+<div>Post-start interval (minutes): <input type="number" id="postStartInterval" value="1"></div>
 <div>Post-race duration (minutes, 0 = none): <input type="number" id="postRaceDuration" value="0"></div>
 <div>Countdown duration (seconds): <input type="number" id="warningSeconds" value="10"></div>
 
@@ -52,75 +52,80 @@ input[type="text"] { width: 260px; }
 // =====================
 // STATE
 // =====================
-let running=false, prestart=true, raceFinished=false;
-let remaining=600, elapsed=0;
-let timerId=null, tickInterval=1000;
-let flashEnabled=true, testMode=false;
+let running = false, prestart = true, raceFinished = false;
+let remaining = 600, elapsed = 0;
+let timerId = null, tickInterval = 1000;
+let flashEnabled = true, testMode = false;
 
-let signals={};
-let longBeepMinutes=[];
+let signals = {};
+let longBeepMinutes = [];
+let countdownKlaxonPlayed = false;
 
 // =====================
 // AUDIO & VIBRATION
 // =====================
-let audioCtx=null;
+let audioCtx = null;
 function initAudio(){
-    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    if(audioCtx.state==="suspended") audioCtx.resume();
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === "suspended") audioCtx.resume();
 }
 
-function vibratePattern(duration=200){
-    if(navigator.vibrate){
-        navigator.vibrate(duration);
-    }
+function vibratePattern(duration = 200){
+    if(navigator.vibrate) navigator.vibrate(duration);
 }
 
-function playKlaxon(d=0.25, base=380, sweep=520, vol=0.6){
+function playKlaxon(d = 0.25, base = 380, sweep = 520, vol = 0.6){
     if(!audioCtx) return;
-    const now=audioCtx.currentTime;
-    const o1=audioCtx.createOscillator();
-    const o2=audioCtx.createOscillator();
-    const g=audioCtx.createGain();
 
-    o1.type="square"; o2.type="sawtooth";
-    o1.frequency.setValueAtTime(base,now);
-    o1.frequency.linearRampToValueAtTime(sweep,now+d);
-    o2.frequency.setValueAtTime(base/2,now);
+    const now = audioCtx.currentTime;
+    const o1 = audioCtx.createOscillator();
+    const o2 = audioCtx.createOscillator();
+    const g  = audioCtx.createGain();
 
-    g.gain.setValueAtTime(0.001,now);
-    g.gain.exponentialRampToValueAtTime(vol,now+0.02);
-    g.gain.exponentialRampToValueAtTime(0.001,now+d);
+    o1.type = "square";
+    o2.type = "sawtooth";
 
-    o1.connect(g); o2.connect(g); g.connect(audioCtx.destination);
-    o1.start(now); o2.start(now);
-    o1.stop(now+d); o2.stop(now+d);
+    o1.frequency.setValueAtTime(base, now);
+    o1.frequency.linearRampToValueAtTime(sweep, now + d);
+    o2.frequency.setValueAtTime(base / 2, now);
 
-    vibratePattern(200); // vibrate along with beep
+    g.gain.setValueAtTime(0.001, now);
+    g.gain.exponentialRampToValueAtTime(vol, now + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, now + d);
+
+    o1.connect(g);
+    o2.connect(g);
+    g.connect(audioCtx.destination);
+
+    o1.start(now);
+    o2.start(now);
+    o1.stop(now + d);
+    o2.stop(now + d);
+
+    vibratePattern(d * 1000);
 }
 
 function shortBeep(){ playKlaxon(0.25); }
-function longBeep(){ playKlaxon(1.1,360,520,0.75); }
-function finishKlaxon(){ playKlaxon(2.6,200,420,0.95); }
+function longBeep(){ playKlaxon(1.1, 360, 520, 0.75); }
+function finishKlaxon(){ playKlaxon(2.6, 200, 420, 0.95); }
+function countdownEndKlaxon(){ playKlaxon(1.8, 260, 480, 0.9); }
 
 // =====================
 // SIGNAL SETUP
 // =====================
 function updateSignals(){
-    signals={};
+    signals = {};
 
     const pre = document.getElementById("prestartInput").value
-        .split(",").map(x=>parseInt(x)).filter(x=>x>0);
+        .split(",").map(x => parseInt(x)).filter(x => x > 0);
 
     longBeepMinutes = document.getElementById("longBeepInput").value
-        .split(",").map(x=>parseInt(x)).filter(x=>x>0);
+        .split(",").map(x => parseInt(x)).filter(x => x > 0);
 
     const allMinutes = new Set([...pre, ...longBeepMinutes]);
+    allMinutes.forEach(m => signals[m * 60] = `${m} min`);
 
-    allMinutes.forEach(m=>{
-        signals[m*60]=`${m} min`;
-    });
-
-    signals[0]="START";
+    signals[0] = "START";
 }
 
 // =====================
@@ -129,67 +134,71 @@ function updateSignals(){
 function tick(){
     if(!running || raceFinished) return;
 
-    const info=document.getElementById("info");
-    const warn=parseInt(warningSeconds.value)||10;
-    const postInterval=parseInt(postStartInterval.value)||1;
-    const postRace=parseInt(postRaceDuration.value)||0;
+    const info = document.getElementById("info");
+    const warn = parseInt(warningSeconds.value) || 10;
+    const postInterval = parseInt(postStartInterval.value) || 1;
+    const postRace = parseInt(postRaceDuration.value) || 0;
 
     if(prestart){
 
-        // COUNTDOWN BEFORE SIGNAL
-        for (const t in signals) {
+        // COUNTDOWN BEEPS
+        for(const t in signals){
             const sigTime = parseInt(t);
-            if (remaining > sigTime && remaining <= sigTime + warn) {
+            if(remaining > sigTime && remaining <= sigTime + warn){
                 info.textContent = (remaining - sigTime).toString();
                 shortBeep();
                 break;
             }
         }
 
-        // SIGNAL ITSELF
+        // SIGNAL MOMENT
         if(signals[remaining]){
-            info.textContent=signals[remaining];
-            const mins=remaining/60;
+            info.textContent = signals[remaining];
+            const mins = remaining / 60;
 
-            if(remaining===0 || longBeepMinutes.includes(mins)){
+            if(!countdownKlaxonPlayed){
+                countdownEndKlaxon();
+                countdownKlaxonPlayed = true;
+            } else if(remaining === 0 || longBeepMinutes.includes(mins)){
                 longBeep();
             } else {
                 shortBeep();
             }
 
-            if(remaining===0){
-                prestart=false;
-                time.style.color="darkgreen";
+            if(remaining === 0){
+                prestart = false;
+                time.style.color = "darkgreen";
                 return;
             }
         }
 
-        time.textContent=formatTime(remaining);
+        time.textContent = formatTime(remaining);
         remaining--;
 
     } else {
         elapsed++;
 
-        if(postRace>0 && elapsed>=postRace*60){
-            info.textContent="RACE FINISHED";
-            time.textContent=formatTime(elapsed);
+        if(postRace > 0 && elapsed >= postRace * 60){
+            info.textContent = "RACE FINISHED";
+            time.textContent = formatTime(elapsed);
             finishKlaxon();
             stopTimer();
-            raceFinished=true;
+            raceFinished = true;
             return;
         }
 
-        if(elapsed%(postInterval*60)===0){
-            info.textContent=`${elapsed/60} min`;
+        if(elapsed % (postInterval * 60) === 0){
+            info.textContent = `${elapsed / 60} min`;
             longBeep();
-        } else info.textContent="";
+        } else info.textContent = "";
 
-        time.textContent=formatTime(elapsed);
+        time.textContent = formatTime(elapsed);
     }
 }
 
 function formatTime(s){
-    return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+    return String(Math.floor(s / 60)).padStart(2,"0") + ":" +
+           String(s % 60).padStart(2,"0");
 }
 
 // =====================
@@ -199,34 +208,41 @@ function startTimer(){
     initAudio();
     updateSignals();
     if(!running){
-        running=true;
-        timerId=setInterval(tick,tickInterval);
+        running = true;
+        timerId = setInterval(tick, tickInterval);
     }
 }
-function stopTimer(){ running=false; clearInterval(timerId); }
+
+function stopTimer(){
+    running = false;
+    clearInterval(timerId);
+}
 
 function resetTimer(){
     stopTimer();
-    prestart=true; raceFinished=false;
-    remaining=(parseInt(startTimeInput.value)||10)*60;
-    elapsed=0;
-    time.textContent=formatTime(remaining);
-    time.style.color="navy";
-    info.textContent="";
+    prestart = true;
+    raceFinished = false;
+    countdownKlaxonPlayed = false;
+    remaining = (parseInt(startTimeInput.value) || 10) * 60;
+    elapsed = 0;
+    time.textContent = formatTime(remaining);
+    time.style.color = "navy";
+    info.textContent = "";
 }
 
 // =====================
 // TEST MODE
 // =====================
 function toggleTestMode(){
-    testMode=!testMode;
-    tickInterval=testMode?100:1000;
-    alert(testMode?"Test mode ON":"Test mode OFF");
+    testMode = !testMode;
+    tickInterval = testMode ? 100 : 1000;
+    alert(testMode ? "Test mode ON" : "Test mode OFF");
     if(running){
         clearInterval(timerId);
-        timerId=setInterval(tick,tickInterval);
+        timerId = setInterval(tick, tickInterval);
     }
 }
 </script>
+
 </body>
 </html>
