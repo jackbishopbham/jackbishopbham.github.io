@@ -55,6 +55,7 @@ let running=false, prestart=true, raceFinished=false;
 let remaining=600, elapsed=0;
 let timerId=null, tickInterval=1000;
 let testMode=false;
+let lastCountdownSignal = null;
 
 let signals={}, longBeepMinutes=[];
 
@@ -125,24 +126,31 @@ function tick(){
     const postRace=parseInt(postRaceDuration.value)||0;
 if (prestart) {
 
+    let countdownSignal = null;
+
+    // Detect countdown window
     for (const t in signals) {
         const sigTime = parseInt(t);
 
-        // Countdown window
         if (remaining > sigTime && remaining <= sigTime + warn) {
+            countdownSignal = sigTime;
             const cd = remaining - sigTime;
             info.textContent = cd.toString();
             shortBeep();
-
-            // 🔔 LAST countdown second → LONG KLAXON
-            if (remaining === sigTime) {
-                countdownEndKlaxon();
-            }
             break;
         }
     }
 
-    // Signal moment (flag / gun)
+    // 🔔 countdown just finished (display reached 0)
+    if (countdownSignal !== null &&
+        lastCountdownSignal === countdownSignal &&
+        remaining === countdownSignal) {
+        countdownEndKlaxon();
+    }
+
+    lastCountdownSignal = countdownSignal;
+
+    // Signal moment
     if (signals[remaining]) {
         info.textContent = signals[remaining];
         const mins = remaining / 60;
@@ -160,6 +168,7 @@ if (prestart) {
         time.style.color = "darkgreen";
     }
 }
+
  else {
         elapsed++;
 
