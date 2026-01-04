@@ -4,7 +4,6 @@ title: "Race Timer"
 permalink: /racetimer/
 ---
 
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -55,9 +54,9 @@ let running=false, prestart=true, raceFinished=false;
 let remaining=600, elapsed=0;
 let timerId=null, tickInterval=1000;
 let testMode=false;
-let lastCountdownSignal = null;
 
 let signals={}, longBeepMinutes=[];
+let countdownActiveFor=null;
 
 // =====================
 // AUDIO
@@ -124,57 +123,52 @@ function tick(){
     const warn=parseInt(warningSeconds.value)||10;
     const postInterval=parseInt(postStartInterval.value)||1;
     const postRace=parseInt(postRaceDuration.value)||0;
-if (prestart) {
 
-    let countdownSignal = null;
+    if(prestart){
+        let activeSignal=null;
 
-    // Detect countdown window
-    for (const t in signals) {
-        const sigTime = parseInt(t);
+        for(const t in signals){
+            const sigTime=parseInt(t);
 
-        if (remaining > sigTime && remaining <= sigTime + warn) {
-            countdownSignal = sigTime;
-            const cd = remaining - sigTime;
-            info.textContent = cd.toString();
-            shortBeep();
-            break;
+            if(remaining>sigTime && remaining<=sigTime+warn){
+                activeSignal=sigTime;
+                info.textContent=(remaining-sigTime).toString();
+                shortBeep();
+                break;
+            }
         }
-    }
 
-    // 🔔 countdown just finished (display reached 0)
-    if (countdownSignal !== null &&
-        lastCountdownSignal === countdownSignal &&
-        remaining === countdownSignal) {
-        countdownEndKlaxon();
-    }
-
-    lastCountdownSignal = countdownSignal;
-
-    // Signal moment
-    if (signals[remaining]) {
-        info.textContent = signals[remaining];
-        const mins = remaining / 60;
-
-        if (remaining === 0 || longBeepMinutes.includes(mins)) {
-            longBeep();
+        // 🔔 countdown finished → display just reached 0
+        if(
+            countdownActiveFor !== null &&
+            remaining === countdownActiveFor
+        ){
+            countdownEndKlaxon();
         }
-    }
 
-    time.textContent = formatTime(remaining);
-    remaining--;
+        countdownActiveFor=activeSignal;
 
-    if (remaining < 0) {
-        prestart = false;
-        time.style.color = "darkgreen";
-    }
-}
+        if(signals[remaining]){
+            info.textContent=signals[remaining];
+            const mins=remaining/60;
+            if(remaining===0||longBeepMinutes.includes(mins)){
+                longBeep();
+            }
+        }
 
- else {
+        time.textContent=formatTime(remaining);
+        remaining--;
+
+        if(remaining<0){
+            prestart=false;
+            time.style.color="darkgreen";
+        }
+    } else {
         elapsed++;
 
         if(postRace>0 && elapsed>=postRace*60){
-            document.getElementById("info").textContent="RACE FINISHED";
-            document.getElementById("time").textContent=formatTime(elapsed);
+            info.textContent="RACE FINISHED";
+            time.textContent=formatTime(elapsed);
             finishKlaxon();
             stopTimer();
             raceFinished=true;
@@ -182,11 +176,11 @@ if (prestart) {
         }
 
         if(elapsed%(postInterval*60)===0){
-            document.getElementById("info").textContent=`${elapsed/60} min`;
+            info.textContent=`${elapsed/60} min`;
             longBeep();
-        } else document.getElementById("info").textContent="";
+        } else info.textContent="";
 
-        document.getElementById("time").textContent=formatTime(elapsed);
+        time.textContent=formatTime(elapsed);
     }
 }
 
@@ -211,9 +205,10 @@ function resetTimer(){
     prestart=true; raceFinished=false;
     remaining=(parseInt(startTimeInput.value)||10)*60;
     elapsed=0;
-    document.getElementById("time").style.color="navy";
-    document.getElementById("time").textContent=formatTime(remaining);
-    document.getElementById("info").textContent="";
+    time.style.color="navy";
+    time.textContent=formatTime(remaining);
+    info.textContent="";
+    countdownActiveFor=null;
 }
 
 // =====================
