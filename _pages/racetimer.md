@@ -4,6 +4,7 @@ title: "Race Timer"
 permalink: /racetimer/
 ---
 
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -29,7 +30,7 @@ input[type="text"] { width: 260px; }
 
 <body>
 
-<h1>Sailing Race Timer V1.1.6</h1>
+<h1>Sailing Race Timer V1.1.7</h1>
 
 <div>Start time (minutes): <input type="number" id="startTimeInput" value="10"></div>
 <div>Pre-start minutes: <input type="text" id="prestartInput" value="10,5,4,1"></div>
