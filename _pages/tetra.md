@@ -3,5 +3,5 @@ layout: page
 title: "Tetradalitz"
 permalink: /tetra/
 ---
-
-{% include tetralow2.html %}
+{% include tetra.html %}
+{% include tetra2.html %}
